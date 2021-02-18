@@ -41,6 +41,7 @@ def test_normalize_chunks():
         normalize_chunks((100, 10), (100,), 1)
     with pytest.raises(ValueError, match="chunk size of 0"):
         normalize_chunks(0, (100,), 1)
+    assert (30, 20, 0) == normalize_chunks((30, 20, 0), (100, 20, 0), 1)
 
     # test auto-chunking
     assert (100,) == normalize_chunks(None, (100,), 1)

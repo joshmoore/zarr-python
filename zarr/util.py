@@ -136,8 +136,9 @@ def normalize_chunks(
                        for s, c in zip(shape, chunks))
 
     # raise for size 0 chunks
-    if 0 in chunks:
-        raise ValueError("Setting a chunk size of 0 is not supported")
+    for idx, dim in enumerate(chunks):
+        if dim == 0 and shape[idx] != 0:
+            raise ValueError("Setting a chunk size of 0 is not supported")
 
     return tuple(chunks)
 
