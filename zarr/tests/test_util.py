@@ -180,15 +180,19 @@ def test_retry_call():
 
     class F:
 
-        def __init__(self):
+        def __init__(self, fail_on=1):
             self.c = 0
+            self.fail_on = fail_on
 
         def __call__(self):
             self.c += 1
-            if self.c == 1:
+            if self.c == self.fail_on:
                 raise PermissionError();
 
     retry_call(F(), exceptions=(PermissionError,), wait=0)
+
+    # Catch the final clause
+    retry_call(F(10), exceptions=(PermissionError,), wait=0)
 
     pytest.raises(PermissionError,
         retry_call, F(), exceptions=(NotImplementedError,), wait=0)
