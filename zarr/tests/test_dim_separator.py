@@ -80,6 +80,8 @@ def verify(array, expect_failure=False):
         if expect_failure:
             pytest.xfail()
         else:
+            # Debugging issue:858
+            import pdb; pdb.set_trace()
             raise  # pragma: no cover
 
 
