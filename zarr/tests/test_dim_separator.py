@@ -2,6 +2,7 @@ import pathlib
 
 import pytest
 from numpy.testing import assert_array_equal
+from functools import partial
 
 import zarr
 from zarr.core import Array
@@ -45,7 +46,8 @@ def dataset(tmpdir, request):
             if "nested" in which:
                 generator = NestedDirectoryStore
             else:
-                generator = DirectoryStore
+                # Try to force the metadata
+                generator = partial(DirectoryStore, dimension_separator=".")
 
             # store the data - should be one-time operation
             s = generator(str(static))
