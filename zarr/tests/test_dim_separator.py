@@ -41,7 +41,6 @@ def dataset(tmpdir, request):
         static = project_root / "fixture" / suffix
 
         if not static.exists():  # pragma: no cover
-            raise Exception(f"{static} does not exist")
 
             if "nested" in which:
                 generator = NestedDirectoryStore
@@ -81,6 +80,10 @@ def verify(array, expect_failure=False):
         if expect_failure:
             pytest.xfail()
         else:
+            print(
+                f"{array.store}:{array.store.path}"
+            )
+            import pdb; pdb.set_trace()
             raise  # pragma: no cover
 
 
