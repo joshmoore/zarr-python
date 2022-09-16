@@ -5,7 +5,7 @@ import pickle
 import shutil
 import unittest
 from itertools import zip_longest
-from tempfile import mkdtemp, mktemp
+from tempfile import mkdtemp, mkstemp
 
 import numpy as np
 import pytest
@@ -2063,7 +2063,7 @@ class TestArrayWithDBMStore(TestArray):
 
     @staticmethod
     def create_array(read_only=False, **kwargs):
-        path = mktemp(suffix='.anydbm')
+        path = mkstemp(suffix='.anydbm')
         atexit.register(atexit_rmglob, path + '*')
         store = DBMStore(path, flag='n')
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -2083,7 +2083,7 @@ class TestArrayWithDBMStoreBerkeleyDB(TestArray):
     @staticmethod
     def create_array(read_only=False, **kwargs):
         bsddb3 = pytest.importorskip("bsddb3")
-        path = mktemp(suffix='.dbm')
+        path = mkstemp(suffix='.dbm')
         atexit.register(os.remove, path)
         store = DBMStore(path, flag='n', open=bsddb3.btopen)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -2103,7 +2103,7 @@ class TestArrayWithLMDBStore(TestArray):
     @staticmethod
     def create_array(read_only=False, **kwargs):
         pytest.importorskip("lmdb")
-        path = mktemp(suffix='.lmdb')
+        path = mkstemp(suffix='.lmdb')
         atexit.register(atexit_rmtree, path)
         store = LMDBStore(path, buffers=True)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -2126,7 +2126,7 @@ class TestArrayWithLMDBStoreNoBuffers(TestArray):
     @staticmethod
     def create_array(read_only=False, **kwargs):
         pytest.importorskip("lmdb")
-        path = mktemp(suffix='.lmdb')
+        path = mkstemp(suffix='.lmdb')
         atexit.register(atexit_rmtree, path)
         store = LMDBStore(path, buffers=False)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -2146,7 +2146,7 @@ class TestArrayWithSQLiteStore(TestArray):
     @staticmethod
     def create_array(read_only=False, **kwargs):
         pytest.importorskip("sqlite3")
-        path = mktemp(suffix='.db')
+        path = mkstemp(suffix='.db')
         atexit.register(atexit_rmtree, path)
         store = SQLiteStore(path)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -2982,7 +2982,7 @@ class TestArrayWithDBMStoreV3(TestArrayWithDBMStore, TestArrayWithPathV3):
 
     @staticmethod
     def create_array(array_path='arr1', read_only=False, **kwargs):
-        path = mktemp(suffix='.anydbm')
+        path = mkstemp(suffix='.anydbm')
         atexit.register(atexit_rmglob, path + '*')
         store = DBMStoreV3(path, flag='n')
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -3003,7 +3003,7 @@ class TestArrayWithDBMStoreV3BerkeleyDB(TestArrayWithDBMStoreBerkeleyDB, TestArr
     @staticmethod
     def create_array(array_path='arr1', read_only=False, **kwargs):
         bsddb3 = pytest.importorskip("bsddb3")
-        path = mktemp(suffix='.dbm')
+        path = mkstemp(suffix='.dbm')
         atexit.register(os.remove, path)
         store = DBMStoreV3(path, flag='n', open=bsddb3.btopen)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -3024,7 +3024,7 @@ class TestArrayWithLMDBStoreV3(TestArrayWithLMDBStore, TestArrayWithPathV3):
     @staticmethod
     def create_array(array_path='arr1', read_only=False, **kwargs):
         pytest.importorskip("lmdb")
-        path = mktemp(suffix='.lmdb')
+        path = mkstemp(suffix='.lmdb')
         atexit.register(atexit_rmtree, path)
         store = LMDBStoreV3(path, buffers=True)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -3048,7 +3048,7 @@ class TestArrayWithLMDBStoreV3NoBuffers(TestArrayWithLMDBStoreNoBuffers, TestArr
     @staticmethod
     def create_array(array_path='arr1', read_only=False, **kwargs):
         pytest.importorskip("lmdb")
-        path = mktemp(suffix='.lmdb')
+        path = mkstemp(suffix='.lmdb')
         atexit.register(atexit_rmtree, path)
         store = LMDBStoreV3(path, buffers=False)
         cache_metadata = kwargs.pop('cache_metadata', True)
@@ -3069,7 +3069,7 @@ class TestArrayWithSQLiteStoreV3(TestArrayWithPathV3, TestArrayWithSQLiteStore):
     @staticmethod
     def create_array(array_path='arr1', read_only=False, **kwargs):
         pytest.importorskip("sqlite3")
-        path = mktemp(suffix='.db')
+        path = mkstemp(suffix='.db')
         atexit.register(atexit_rmtree, path)
         store = SQLiteStoreV3(path)
         cache_metadata = kwargs.pop('cache_metadata', True)
