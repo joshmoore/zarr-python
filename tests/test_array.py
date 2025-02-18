@@ -1444,3 +1444,36 @@ async def test_sharding_coordinate_selection() -> None:
     )
     arr[:] = np.arange(2 * 3 * 4).reshape((2, 3, 4))
     assert (arr[1, [0, 1]] == np.array([[12, 13, 14, 15], [16, 17, 18, 19]])).all()  # type: ignore[index]
+
+
+@pytest.mark.xfail(reason="zarr.common.core maps any string to the string type")
+async def test_array_v3_ext_uri_by_string(
+) -> None:
+    """
+    Test the user impact of the extension mechanism
+    """
+    store = MemoryStore()
+    g = zarr.open_group(store, mode="w")
+    arr = g.create_array(
+        name="a",
+        dtype="https://example.com",  # Or require here a DataType instance
+        shape=(12,),
+        chunks=(3,),
+    )
+    assert arr.data_type == None  # TODO: import the example dtype
+
+
+async def test_array_v3_ext_uri_by_class(
+) -> None:
+    """
+    Test the user impact of the extension mechanism
+    """
+    store = MemoryStore()
+    g = zarr.open_group(store, mode="w")
+    arr = g.create_array(
+        name="a",
+        dtype=DataType.example,
+        shape=(12,),
+        chunks=(3,),
+    )
+    assert arr.dtype == np.dtype(bool)

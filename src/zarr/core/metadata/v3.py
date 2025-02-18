@@ -659,7 +659,7 @@ class DataType(Enum):
             DataType.float64: "f8",
             DataType.complex64: "c8",
             DataType.complex128: "c16",
-            DataType.example: np.dtype(object),
+            DataType.example: "bool",  # Something numpy-ish
         }
         return data_type_to_numpy[self]
 

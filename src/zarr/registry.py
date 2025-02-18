@@ -53,6 +53,7 @@ __codec_registries: dict[str, Registry[Codec]] = defaultdict(Registry)
 __pipeline_registry: Registry[CodecPipeline] = Registry()
 __buffer_registry: Registry[Buffer] = Registry()
 __ndbuffer_registry: Registry[NDBuffer] = Registry()
+__dtype_registry: Registry[DataType] = Registry()
 
 """
 The registry module is responsible for managing implementations of codecs,
