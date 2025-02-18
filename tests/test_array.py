@@ -1447,8 +1447,7 @@ async def test_sharding_coordinate_selection() -> None:
 
 
 @pytest.mark.xfail(reason="zarr.common.core maps any string to the string type")
-async def test_array_v3_ext_uri_by_string(
-) -> None:
+async def test_array_v3_ext_uri_by_string() -> None:
     """
     Test the user impact of the extension mechanism
     """
@@ -1460,11 +1459,10 @@ async def test_array_v3_ext_uri_by_string(
         shape=(12,),
         chunks=(3,),
     )
-    assert arr.data_type == None  # TODO: import the example dtype
+    assert arr.dtype == np.dtype(bool)
 
 
-async def test_array_v3_ext_uri_by_class(
-) -> None:
+async def test_array_v3_ext_uri_by_class() -> None:
     """
     Test the user impact of the extension mechanism
     """

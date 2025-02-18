@@ -170,7 +170,7 @@ def parse_bool(data: Any) -> bool:
 def parse_dtype(dtype: Any, zarr_format: ZarrFormat) -> np.dtype[Any]:
     if "datatype" in type(dtype).__name__.lower():
         # Workaround until we have the class in place
-        return dtype.to_numpy()  # TODO: call conversion method
+        return np.dtype(dtype.to_numpy())  # TODO: call conversion method
     if dtype is str or dtype == "str":
         if zarr_format == 2:
             # special case as object

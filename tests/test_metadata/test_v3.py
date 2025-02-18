@@ -412,6 +412,7 @@ def test_dtypes(dtype_str: str) -> None:
         # return type for vlen types may vary depending on numpy version
         assert dt.byte_count is None
 
+
 async def test_ext_uri() -> None:
     metadata_dict = {
         "zarr_format": 3,
@@ -424,5 +425,4 @@ async def test_ext_uri() -> None:
         "fill_value": 0,
     }
     m = ArrayV3Metadata.from_dict(metadata_dict)
-    d = json.loads(m.to_buffer_dict(default_buffer_prototype())["zarr.json"].to_bytes())
     assert m.data_type is DataType.example

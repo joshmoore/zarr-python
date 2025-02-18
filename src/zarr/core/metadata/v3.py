@@ -663,7 +663,6 @@ class DataType(Enum):
         }
         return data_type_to_numpy[self]
 
-
     def to_numpy(self) -> np.dtypes.StringDType | np.dtypes.ObjectDType | np.dtype[Any]:
         # note: it is not possible to round trip DataType <-> np.dtype
         # due to the fact that DataType.string and DataType.bytes both

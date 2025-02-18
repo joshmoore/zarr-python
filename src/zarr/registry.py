@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     )
     from zarr.core.buffer import Buffer, NDBuffer
     from zarr.core.common import JSON
+    from zarr.core.metadata.v3 import DataType
 
 __all__ = [
     "Registry",
