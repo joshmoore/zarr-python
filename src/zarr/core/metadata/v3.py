@@ -612,6 +612,7 @@ class DataType(Enum):
     complex128 = "complex128"
     string = "string"
     bytes = "bytes"
+    example = "https://example.com"
 
     @property
     def byte_count(self) -> int | None:
@@ -630,6 +631,7 @@ class DataType(Enum):
             DataType.float64: 8,
             DataType.complex64: 8,
             DataType.complex128: 16,
+            DataType.example: 32,
         }
         try:
             return data_type_byte_counts[self]
@@ -657,8 +659,10 @@ class DataType(Enum):
             DataType.float64: "f8",
             DataType.complex64: "c8",
             DataType.complex128: "c16",
+            DataType.example: np.dtype(object),
         }
         return data_type_to_numpy[self]
+
 
     def to_numpy(self) -> np.dtypes.StringDType | np.dtypes.ObjectDType | np.dtype[Any]:
         # note: it is not possible to round trip DataType <-> np.dtype
